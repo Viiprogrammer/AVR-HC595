@@ -1,0 +1,374 @@
+
+AVR-HC595.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000174  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .bss          00000002  00800060  00800060  000001e8  2**0
+                  ALLOC
+  2 .comment      00000030  00000000  00000000  000001e8  2**0
+                  CONTENTS, READONLY
+  3 .debug_aranges 00000060  00000000  00000000  00000218  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   000003fd  00000000  00000000  00000278  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 00000251  00000000  00000000  00000675  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   00000294  00000000  00000000  000008c6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  00000088  00000000  00000000  00000b5c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    000001f3  00000000  00000000  00000be4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    0000033f  00000000  00000000  00000dd7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000098  00000000  00000000  00001116  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	17 c0       	rjmp	.+46     	; 0x46 <__bad_interrupt>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	14 c0       	rjmp	.+40     	; 0x46 <__bad_interrupt>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_clear_bss>:
+  32:	20 e0       	ldi	r18, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	a2 36       	cpi	r26, 0x62	; 98
+  3e:	b2 07       	cpc	r27, r18
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	47 d0       	rcall	.+142    	; 0xd2 <main>
+  44:	95 c0       	rjmp	.+298    	; 0x170 <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <ShiftRegisterInit>:
+
+/* 
+  Init SPI and I/O pins
+*/
+void ShiftRegisterInit(){
+  	DATA_DDR |= (1<<DATA);
+  48:	b8 9a       	sbi	0x17, 0	; 23
+	SCK_DDR |= (1<<SCK);
+  4a:	bb 9a       	sbi	0x17, 3	; 23
+	LATCH_DDR |= (1<<LATCH);
+  4c:	bc 9a       	sbi	0x17, 4	; 23
+	
+  	DATA_PORT &=~ (1 << DATA);
+  4e:	c0 98       	cbi	0x18, 0	; 24
+	SCK_PORT &=~ (1 << SCK);
+  50:	c3 98       	cbi	0x18, 3	; 24
+	LATCH_PORT &=~ (1 << LATCH);
+  52:	c4 98       	cbi	0x18, 4	; 24
+  54:	08 95       	ret
+
+00000056 <ShiftRegisterSend>:
+}
+
+/*
+  Send data to Shift register
+*/
+void ShiftRegisterSend(){
+  56:	e2 e6       	ldi	r30, 0x62	; 98
+  58:	f0 e0       	ldi	r31, 0x00	; 0
+  5a:	20 e6       	ldi	r18, 0x60	; 96
+  5c:	30 e0       	ldi	r19, 0x00	; 0
+	for(unsigned int byte = sizeof(ShiftPORT); byte > 0; byte--){
+	#else
+	  for(unsigned int byte = 1; byte <= sizeof(ShiftPORT); byte++){
+	#endif  
+	
+		unsigned char data = ShiftPORT[byte-1];
+  5e:	68 e0       	ldi	r22, 0x08	; 8
+  60:	50 e0       	ldi	r21, 0x00	; 0
+  62:	42 91       	ld	r20, -Z
+  64:	86 2f       	mov	r24, r22
+  66:	95 2f       	mov	r25, r21
+		for(unsigned int bit = 0; bit < 8; bit++){
+			if(data & 0x80){
+  68:	44 23       	and	r20, r20
+  6a:	14 f4       	brge	.+4      	; 0x70 <ShiftRegisterSend+0x1a>
+				DATA_PORT |= (1 << DATA);
+  6c:	c0 9a       	sbi	0x18, 0	; 24
+  6e:	01 c0       	rjmp	.+2      	; 0x72 <ShiftRegisterSend+0x1c>
+			}else{
+				DATA_PORT &=~ (1 << DATA);
+  70:	c0 98       	cbi	0x18, 0	; 24
+			}
+			SCK_PORT |= (1 << SCK);
+  72:	c3 9a       	sbi	0x18, 3	; 24
+			SCK_PORT &=~ (1 << SCK);
+  74:	c3 98       	cbi	0x18, 3	; 24
+			data <<= 1;
+  76:	44 0f       	add	r20, r20
+  78:	01 97       	sbiw	r24, 0x01	; 1
+	#else
+	  for(unsigned int byte = 1; byte <= sizeof(ShiftPORT); byte++){
+	#endif  
+	
+		unsigned char data = ShiftPORT[byte-1];
+		for(unsigned int bit = 0; bit < 8; bit++){
+  7a:	00 97       	sbiw	r24, 0x00	; 0
+  7c:	a9 f7       	brne	.-22     	; 0x68 <ShiftRegisterSend+0x12>
+		while(!(SPSR & (1<<SPIF)));
+	}
+	#else
+	
+	#if (BYTE_ORDER == 1) 
+	for(unsigned int byte = sizeof(ShiftPORT); byte > 0; byte--){
+  7e:	e2 17       	cp	r30, r18
+  80:	f3 07       	cpc	r31, r19
+  82:	79 f7       	brne	.-34     	; 0x62 <ShiftRegisterSend+0xc>
+			SCK_PORT &=~ (1 << SCK);
+			data <<= 1;
+		}
+	}
+	#endif   
+	LATCH_PORT |= (1 << LATCH);
+  84:	c4 9a       	sbi	0x18, 4	; 24
+	LATCH_PORT &=~ (1 << LATCH);
+  86:	c4 98       	cbi	0x18, 4	; 24
+  88:	08 95       	ret
+
+0000008a <ShiftDigitalWrite>:
+  Use example:
+    ShiftDigitalWrite(4, HIGH, 2);
+    This example set pin 4 of №2 shift regisner to HIGH level 
+*/
+void ShiftDigitalWrite(int pin, int lvl, int number){
+  if(lvl){
+  8a:	67 2b       	or	r22, r23
+  8c:	81 f0       	breq	.+32     	; 0xae <ShiftDigitalWrite+0x24>
+    ShiftPORT[number] |= (1 << pin);
+  8e:	fa 01       	movw	r30, r20
+  90:	e0 5a       	subi	r30, 0xA0	; 160
+  92:	ff 4f       	sbci	r31, 0xFF	; 255
+  94:	21 e0       	ldi	r18, 0x01	; 1
+  96:	30 e0       	ldi	r19, 0x00	; 0
+  98:	a9 01       	movw	r20, r18
+  9a:	02 c0       	rjmp	.+4      	; 0xa0 <ShiftDigitalWrite+0x16>
+  9c:	44 0f       	add	r20, r20
+  9e:	55 1f       	adc	r21, r21
+  a0:	8a 95       	dec	r24
+  a2:	e2 f7       	brpl	.-8      	; 0x9c <ShiftDigitalWrite+0x12>
+  a4:	ca 01       	movw	r24, r20
+  a6:	90 81       	ld	r25, Z
+  a8:	89 2b       	or	r24, r25
+  aa:	80 83       	st	Z, r24
+  ac:	10 c0       	rjmp	.+32     	; 0xce <ShiftDigitalWrite+0x44>
+  }else{
+	ShiftPORT[number] &= ~(1 << pin);
+  ae:	fa 01       	movw	r30, r20
+  b0:	e0 5a       	subi	r30, 0xA0	; 160
+  b2:	ff 4f       	sbci	r31, 0xFF	; 255
+  b4:	21 e0       	ldi	r18, 0x01	; 1
+  b6:	30 e0       	ldi	r19, 0x00	; 0
+  b8:	a9 01       	movw	r20, r18
+  ba:	02 c0       	rjmp	.+4      	; 0xc0 <ShiftDigitalWrite+0x36>
+  bc:	44 0f       	add	r20, r20
+  be:	55 1f       	adc	r21, r21
+  c0:	8a 95       	dec	r24
+  c2:	e2 f7       	brpl	.-8      	; 0xbc <ShiftDigitalWrite+0x32>
+  c4:	ca 01       	movw	r24, r20
+  c6:	80 95       	com	r24
+  c8:	90 81       	ld	r25, Z
+  ca:	89 23       	and	r24, r25
+  cc:	80 83       	st	Z, r24
+  }
+  ShiftRegisterSend();
+  ce:	c3 df       	rcall	.-122    	; 0x56 <ShiftRegisterSend>
+  d0:	08 95       	ret
+
+000000d2 <main>:
+#include <util/delay.h>
+#include "74hc595.h"
+
+int main(void)
+{
+	ShiftRegisterInit();
+  d2:	ba df       	rcall	.-140    	; 0x48 <ShiftRegisterInit>
+    while(1)
+    {
+        for(int i = 0; i < 2; i++){
+  d4:	00 e0       	ldi	r16, 0x00	; 0
+  d6:	10 e0       	ldi	r17, 0x00	; 0
+  d8:	e1 2c       	mov	r14, r1
+  da:	f1 2c       	mov	r15, r1
+  dc:	14 c0       	rjmp	.+40     	; 0x106 <main+0x34>
+		  for (int b = 0; b < 8; b++)
+		  {
+			  ShiftDigitalWrite(b, HIGH, i);
+  de:	a8 01       	movw	r20, r16
+  e0:	61 e0       	ldi	r22, 0x01	; 1
+  e2:	70 e0       	ldi	r23, 0x00	; 0
+  e4:	ce 01       	movw	r24, r28
+  e6:	d1 df       	rcall	.-94     	; 0x8a <ShiftDigitalWrite>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  e8:	2f ef       	ldi	r18, 0xFF	; 255
+  ea:	82 e5       	ldi	r24, 0x52	; 82
+  ec:	97 e0       	ldi	r25, 0x07	; 7
+  ee:	21 50       	subi	r18, 0x01	; 1
+  f0:	80 40       	sbci	r24, 0x00	; 0
+  f2:	90 40       	sbci	r25, 0x00	; 0
+  f4:	e1 f7       	brne	.-8      	; 0xee <main+0x1c>
+  f6:	00 c0       	rjmp	.+0      	; 0xf8 <main+0x26>
+  f8:	00 00       	nop
+{
+	ShiftRegisterInit();
+    while(1)
+    {
+        for(int i = 0; i < 2; i++){
+		  for (int b = 0; b < 8; b++)
+  fa:	21 96       	adiw	r28, 0x01	; 1
+  fc:	c8 30       	cpi	r28, 0x08	; 8
+  fe:	d1 05       	cpc	r29, r1
+ 100:	71 f7       	brne	.-36     	; 0xde <main+0xc>
+int main(void)
+{
+	ShiftRegisterInit();
+    while(1)
+    {
+        for(int i = 0; i < 2; i++){
+ 102:	0f 5f       	subi	r16, 0xFF	; 255
+ 104:	1f 4f       	sbci	r17, 0xFF	; 255
+ 106:	02 30       	cpi	r16, 0x02	; 2
+ 108:	11 05       	cpc	r17, r1
+ 10a:	b4 f0       	brlt	.+44     	; 0x138 <main+0x66>
+ 10c:	ce 2d       	mov	r28, r14
+ 10e:	df 2d       	mov	r29, r15
+		  }
+		}
+		for(int i = 0; i < 2; i++){
+		  for (int b = 0; b < 8; b++)
+		  {
+			 ShiftDigitalWrite(b, LOW, i);
+ 110:	4e 2d       	mov	r20, r14
+ 112:	5f 2d       	mov	r21, r15
+ 114:	6e 2d       	mov	r22, r14
+ 116:	7f 2d       	mov	r23, r15
+ 118:	ce 01       	movw	r24, r28
+ 11a:	b7 df       	rcall	.-146    	; 0x8a <ShiftDigitalWrite>
+ 11c:	9f ef       	ldi	r25, 0xFF	; 255
+ 11e:	22 e5       	ldi	r18, 0x52	; 82
+ 120:	87 e0       	ldi	r24, 0x07	; 7
+ 122:	91 50       	subi	r25, 0x01	; 1
+ 124:	20 40       	sbci	r18, 0x00	; 0
+ 126:	80 40       	sbci	r24, 0x00	; 0
+ 128:	e1 f7       	brne	.-8      	; 0x122 <main+0x50>
+ 12a:	00 c0       	rjmp	.+0      	; 0x12c <main+0x5a>
+ 12c:	00 00       	nop
+			  ShiftDigitalWrite(b, HIGH, i);
+			  _delay_ms(300);
+		  }
+		}
+		for(int i = 0; i < 2; i++){
+		  for (int b = 0; b < 8; b++)
+ 12e:	21 96       	adiw	r28, 0x01	; 1
+ 130:	c8 30       	cpi	r28, 0x08	; 8
+ 132:	d1 05       	cpc	r29, r1
+ 134:	69 f7       	brne	.-38     	; 0x110 <main+0x3e>
+ 136:	19 c0       	rjmp	.+50     	; 0x16a <main+0x98>
+int main(void)
+{
+	ShiftRegisterInit();
+    while(1)
+    {
+        for(int i = 0; i < 2; i++){
+ 138:	ce 2d       	mov	r28, r14
+ 13a:	df 2d       	mov	r29, r15
+ 13c:	d0 cf       	rjmp	.-96     	; 0xde <main+0xc>
+		  }
+		}
+		for(int i = 0; i < 2; i++){
+		  for (int b = 0; b < 8; b++)
+		  {
+			 ShiftDigitalWrite(b, LOW, i);
+ 13e:	41 e0       	ldi	r20, 0x01	; 1
+ 140:	50 e0       	ldi	r21, 0x00	; 0
+ 142:	6e 2d       	mov	r22, r14
+ 144:	7f 2d       	mov	r23, r15
+ 146:	ce 01       	movw	r24, r28
+ 148:	a0 df       	rcall	.-192    	; 0x8a <ShiftDigitalWrite>
+ 14a:	8f ef       	ldi	r24, 0xFF	; 255
+ 14c:	92 e5       	ldi	r25, 0x52	; 82
+ 14e:	27 e0       	ldi	r18, 0x07	; 7
+ 150:	81 50       	subi	r24, 0x01	; 1
+ 152:	90 40       	sbci	r25, 0x00	; 0
+ 154:	20 40       	sbci	r18, 0x00	; 0
+ 156:	e1 f7       	brne	.-8      	; 0x150 <main+0x7e>
+ 158:	00 c0       	rjmp	.+0      	; 0x15a <main+0x88>
+ 15a:	00 00       	nop
+			  ShiftDigitalWrite(b, HIGH, i);
+			  _delay_ms(300);
+		  }
+		}
+		for(int i = 0; i < 2; i++){
+		  for (int b = 0; b < 8; b++)
+ 15c:	21 96       	adiw	r28, 0x01	; 1
+ 15e:	c8 30       	cpi	r28, 0x08	; 8
+ 160:	d1 05       	cpc	r29, r1
+ 162:	69 f7       	brne	.-38     	; 0x13e <main+0x6c>
+int main(void)
+{
+	ShiftRegisterInit();
+    while(1)
+    {
+        for(int i = 0; i < 2; i++){
+ 164:	0e 2d       	mov	r16, r14
+ 166:	1f 2d       	mov	r17, r15
+ 168:	ce cf       	rjmp	.-100    	; 0x106 <main+0x34>
+			  ShiftDigitalWrite(b, HIGH, i);
+			  _delay_ms(300);
+		  }
+		}
+		for(int i = 0; i < 2; i++){
+		  for (int b = 0; b < 8; b++)
+ 16a:	ce 2d       	mov	r28, r14
+ 16c:	df 2d       	mov	r29, r15
+ 16e:	e7 cf       	rjmp	.-50     	; 0x13e <main+0x6c>
+
+00000170 <_exit>:
+ 170:	f8 94       	cli
+
+00000172 <__stop_program>:
+ 172:	ff cf       	rjmp	.-2      	; 0x172 <__stop_program>
