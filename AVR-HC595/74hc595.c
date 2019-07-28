@@ -58,7 +58,7 @@ void ShiftRegisterSend(){
   Set one pin of the shift register 
   Use example:
     ShiftDigitalWrite(4, HIGH, 2);
-    This example set pin 4 of №2 shift regisner to HIGH level 
+    This example set pin 4 of №3 shift regisner to HIGH level (numbering from 0)
 */
 void ShiftDigitalWrite(int pin, int lvl, int number){
   if(lvl){
@@ -72,7 +72,7 @@ void ShiftDigitalWrite(int pin, int lvl, int number){
    Write byte to shift register
    Use example: 
    ShiftDigitalWritePort(0xFF, 1);
-   This example set all pins of №1 shuft register to HIGH level
+   This example set all pins of №2 shuft register to HIGH level (numbering from 0)
 */
 void ShiftDigitalWritePort(int port, int number){
     ShiftPORT[number] = port;
@@ -83,7 +83,7 @@ void ShiftDigitalWritePort(int port, int number){
  Get  actual byte from shift register
  Use example:
   ShiftDigitalGetPort(1);
-  This example return actual byte from shift register №1
+  This example return actual byte from shift register №2 (numbering from 0)
 */
 char ShiftDigitalGetPort(int number){
 	 return ShiftPORT[number];
