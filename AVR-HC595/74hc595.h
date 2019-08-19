@@ -24,10 +24,7 @@
  #define SCK_PORT PORTB //SH_CP (SLK) PORT
  #define LATCH_PORT PORTB //ST_CP (LATCH) PORT
  
-  /*
-   USE_HARDWARE_SPI 1 - Hardware SPI
-   USE_HARDWARE_SPI 0 - Soft SPI
- */
+
  #define BYTE_ORDER 1
  
  //Count of connected shift register
