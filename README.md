@@ -44,7 +44,7 @@ Ru: Пример работы с симуляцией протеус в hc595.pd
 
 En: Work example with Proteus simulation in hc595.pdsprj
 
-## Functions description 74hc595.c RU
+## Описание функций 74hc595.c RU
 
 Функция | Описание | Пример | Описание примера |
 | ------------- | ------------- | ------------- | ------------- |
