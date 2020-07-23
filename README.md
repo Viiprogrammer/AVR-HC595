@@ -53,6 +53,7 @@ ShiftRegisterSend(void) | Используется для отправки да�
 ShiftDigitalWrite(int pin, int lvl, int number) | Запись одного пина | ShiftDigitalWrite(4, HIGH, 2); | Устанавливает 4ю ногу сдвиггового регистра #3  в HIGH уровень (нумерация сдвиговых регистров от нуля 0)
 ShiftDigitalWritePort(int port, int number) | Запись данных в весь порт сдвигового регистра | ShiftDigitalWritePort(0xFF, 1); | Устанока всех выводов сдвигового регистра #2 (нумерация сдвиговых регистров от нуля 0) в HIGH записью `FF` в порт
 ShiftDigitalGetPort(int number) | Возврат байта порта| ShiftDigitalGetPort(1); | Возвращает актуальную информацию о состоянии порта сдвигового регистра #2 (нумерация сдвиговых регистров от нуля 0)
+strobLatch() | Выводит данные на выход регистров | strobLatch(); | -
 
 ## Functions description  74hc595.c EN
 
@@ -63,6 +64,8 @@ ShiftRegisterSend(void) | Used for for send data into all Shift Registers | Shif
 ShiftDigitalWrite(int pin, int lvl, int number) | Write of one pin  | ShiftDigitalWrite(4, HIGH, 2); | Set pin 4 of #3 (numbering from 0) shift regisner to HIGH level
 ShiftDigitalWritePort(int port, int number) | Writing data to shift register port | ShiftDigitalWritePort(0xFF, 1); | Set all pins of #2 (numbering from 0) shift register to HIGH level
 ShiftDigitalGetPort(int number) | Return actual byte of port | ShiftDigitalGetPort(1); |  Return actual byte from shift register #2 (numbering from 0)
+strobLatch() | Latch shift register(s) | strobLatch(); | -
+
 
 
 ## Конфигурация 74hc595.h RU 

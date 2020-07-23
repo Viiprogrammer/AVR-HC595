@@ -5,16 +5,16 @@
  void ShiftDigitalWrite(int pin, int lvl, int number);
  void ShiftDigitalWritePort(int port, int number);
  char ShiftDigitalGetPort(int number);
- 
+ void strobLatch();
  /*
    USE_HARDWARE_SPI 1 - Hardware SPI
    USE_HARDWARE_SPI 0 - Soft SPI
  */
  #define USE_HARDWARE_SPI 0 
  
- #define DATA 0 //DS Pin
- #define SCK 3 //SH_CP (SLK) Pin
- #define LATCH 4 //ST_CP (LATCH) Pin
+ #define DATA 2 //DS Pin
+ #define SCK 4 //SH_CP (SLK) Pin
+ #define LATCH 3 //ST_CP (LATCH) Pin
 
  #define DATA_DDR DDRB //DS DDR
  #define SCK_DDR DDRB //SH_CP (SLK) DDR

@@ -21,6 +21,11 @@ void ShiftRegisterInit(){
 	#endif
 }
 
+
+void strobLatch(){
+	LATCH_PORT |= (1 << LATCH);
+	LATCH_PORT &=~ (1 << LATCH);
+}
 /*
   Send data to Shift register
 */
@@ -51,8 +56,6 @@ void ShiftRegisterSend(){
 		}
 	}
 	#endif   
-	LATCH_PORT |= (1 << LATCH);
-	LATCH_PORT &=~ (1 << LATCH);
 }
 /* 
   Set one pin of the shift register 
