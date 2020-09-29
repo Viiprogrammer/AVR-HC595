@@ -4,13 +4,6 @@ Library for 74hc595 shift register
 Use library example: 
 
 ```
- /*
- * AVR_HC595.c
- *
- * Created: 27.07.2019 0:21:56
- *  Author: Maxim
- */ 
-
 #define F_CPU 8000000UL
 #include <avr/io.h>
 #include <util/delay.h>
@@ -18,13 +11,14 @@ Use library example:
 
 int main(void)
 {
-	ShiftRegisterInit();
+    ShiftRegisterInit();
     while(1)
     {
         for(int i = 0; i < 2; i++){
 		  for (int b = 0; b < 8; b++)
 		  {
 			  ShiftDigitalWrite(b, HIGH, i);
+			  strobLatch();
 			  _delay_ms(300);
 		  }
 		}
@@ -32,6 +26,7 @@ int main(void)
 		  for (int b = 0; b < 8; b++)
 		  {
 			 ShiftDigitalWrite(b, LOW, i);
+			 strobLatch();
 			 _delay_ms(300);
 		  }
 		}
@@ -70,7 +65,7 @@ strobLatch() | Latch shift register(s) | strobLatch(); | -
 
 ## Конфигурация 74hc595.h RU 
 
-Define | описание
+Define | Описание
 | ------------- | ------------- |
 USE_HARDWARE_SPI | Если 1 используется хардварный SPI, если 0 то софтварный на указаных портах и пинах
 DATA 0 & SCK 3 & LATCH 4 | Пины подключения сдвигового регистра, при USE_HARDWARE_SPI = 1 указать пины хардварного SPI
