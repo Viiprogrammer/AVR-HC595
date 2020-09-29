@@ -88,5 +88,5 @@ USE_HARDWARE_SPI | If set 1 - Hardware SPI else  if set 0 - Soft SPI
 DATA 0 & SCK 3 & LATCH 4 | Shift register connection pins, with USE_HARDWARE_SPI = 1 set the hardware SPI pins
 DATA_DDR & SCK_DDR & LATCH_DDR | SPI port configuration register for the shift register with USE_HARDWARE_SPI = 1 must be set  as the hardware SPI port configuration register
 DATA_PORT & SCK_PORT & LATCH_PORT | SPI port register for the shift registrar with USE_HARDWARE_SPI = 1 must be set  as  the register of the hardware SPI port
-BYTE_ORDER | Send Byte order
+BYTE_ORDER | If set 1 - Left adjusted else right adjusted
 HC595_COUNT | Count of connected shift registers
